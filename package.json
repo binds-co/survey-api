@@ -1,0 +1,19 @@
+{
+  "name": "survey-api",
+  "version": "0.1.0",
+  "description": "api for easy plug-n-play/embed ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binds-co/survey-api.git"
+  },
+  "author": "Jojo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/binds-co/survey-api/issues"
+  },
+  "homepage": "https://github.com/binds-co/survey-api#readme"
+}
