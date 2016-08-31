@@ -2,9 +2,11 @@
   "name": "survey-api",
   "version": "0.1.0",
   "description": "api for easy plug-n-play/embed ",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha test/indexSpec.js -R nyan",
+    "test:watch": "npm test -- --watch",
+    "build": "webpack ./src/index.js ./build/index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/binds-co/survey-api/issues"
   },
-  "homepage": "https://github.com/binds-co/survey-api#readme"
+  "homepage": "https://github.com/binds-co/survey-api#readme",
+  "dependencies": {
+    "ajax-request": "^1.2.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "webpack": "^1.13.2"
+  }
 }
