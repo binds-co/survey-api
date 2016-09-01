@@ -1,12 +1,35 @@
-var API = function(id) {
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
+var API = function(surveyID) {
+
   var survey;
+  var lastSurveyID;
+  var apiURL = 'http://app.binds.co/api/sendings/';
+
   return {
-    get: function(e) {
-      return [];
+
+    get: function(forceRequest) {
+      var q = require('q');
+      var deferred = q.defer();
+      //caches survey by default
+      if (!lastSurveyID || forceRequest) {
+        fetch(apiURL + surveyID + '').then(function(r) {
+          return r.json();
+        }).then(function(data) {
+          survey = data;
+          deferred.resolve(data);
+        });
+      } else {
+        deferred.resolve(survey);
+      }
+      lastSurveyID = surveyID;
+      return deferred.promise;
     },
+
     yolot: function(e) {
       return [];
     },
   };
-}
+};
 module.exports = API;
