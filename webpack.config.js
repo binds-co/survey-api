@@ -9,10 +9,7 @@ var config = {
       //{ test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
     ]
   },
-  output: {
-    library: 'Redux',
-    libraryTarget: 'umd'
-  },
+  output: { },
   plugins: [
     //new webpack.optimize.OccurrenceOrderPlugin(),
     //new webpack.DefinePlugin({
@@ -21,7 +18,7 @@ var config = {
   ]
 };
 
-if (env === 'production') {
+//if (env === 'production') {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
@@ -32,6 +29,6 @@ if (env === 'production') {
       }
     })
   )
-}
+//}
 
 module.exports = config

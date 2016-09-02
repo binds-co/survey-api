@@ -2,11 +2,11 @@
   "name": "survey-api",
   "version": "0.1.0",
   "description": "api for easy plug-n-play/embed ",
-  "main": "build/index.js",
+  "main": "dist/binds.min.js",
   "scripts": {
     "test": "mocha test/indexSpec.js",
     "test:watch": "npm test -- --watch",
-    "build": "webpack ./src/index.js ./build/index.js"
+    "build": "webpack ./src/index.js ./dist/binds.min.js"
   },
   "repository": {
     "type": "git",

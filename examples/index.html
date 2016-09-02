@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <script src="../build/index.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+      var surveyId = '57c8388cbca4b403007afef7';
+      var a = binds(surveyId);
+      a.get().then(function(survey){
+        console.log('survey', survey);
+      });
+    </script>
+
+  </body>
+</html>

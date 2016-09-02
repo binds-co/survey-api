@@ -5,7 +5,7 @@ require('isomorphic-fetch');
 var API = function(surveyID) {
   var survey;
   var lastSurveyID;
-  var apiURL = 'http://app.binds.co/api/sendings/';
+  var apiURL = 'https://app.binds.co/api/sendings/';
 
   return {
     get: function(forceRequest) {
@@ -31,4 +31,5 @@ var API = function(surveyID) {
     },
   };
 };
+global.binds = API;
 module.exports = API;
