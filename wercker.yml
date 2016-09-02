@@ -1,0 +1,50 @@
+box: l4digital/node-phantomjs-java
+build:
+    # The steps that will be executed on build
+    steps:
+        - script:
+            name: versions
+            code: |
+              node --version
+              npm --version
+              #phantomjs --version
+              #java -version
+
+        - npm-install
+        - npm-test
+        - script:
+            name: build survey
+            code: npm run build
+
+
+    after-steps:
+        - install-packages:
+          packages: ruby
+
+        - wantedly/pretty-slack-notify:
+                webhook_url: $SLACK_URL
+
+#deploy:
+    #steps:
+        #- script:
+            #name: versions
+            #code: |
+              #node --version
+              #npm --version
+              #phantomjs --version
+        #- npm-install
+
+        #- script:
+            #name: deploy to Firebase
+            #code: |
+                #./node_modules/.bin/firebase --version
+                #./node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN
+
+    #after-steps:
+        #- install-packages:
+          #packages: ruby
+
+        #- wantedly/pretty-slack-notify:
+                #username: Deploy
+                #webhook_url: $SLACK_URL
+
