@@ -15,6 +15,9 @@ chai.should();
 var api = require('../src/index.js');
 var instance;
 
+//mocking global.fetch method
+var mock = require('../mocks/index.js');
+
 describe('get()', function() {
 
   var apiURL = 'http://app.binds.co/api/sendings/';
@@ -22,6 +25,12 @@ describe('get()', function() {
 
   beforeEach(function() {
     instance = api(surveyID);
+    var expected = require('../mocks/sendings/57c8388cbca4b403007afef7.json');
+    mock.init(apiURL + surveyID, expected);
+  });
+
+  afterEach(function() {
+    mock.restore();
   });
 
   it('should return a promise', function() {
