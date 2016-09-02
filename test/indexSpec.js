@@ -1,41 +1,28 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-
-
-
-
-
 var q = require('q');
 var sinon = require('sinon');
-
 var chai = require('chai');
-var chaiHttp = require('chai-http');
+
 var chaiPromise = require('chai-as-promised');
-chai.use(chaiHttp);
 chai.use(chaiPromise);
+
 //wrapping chai
 var expect = chai.expect;
 chai.should();
 
-
-//MOCK section
-//console.log('hello', fetch);
-//fetch = function(e) {
-  //console.log(e);
-//};
-
-
 var api = require('../src/index.js');
 var instance;
 
-
-beforeEach(function() {
-  sinon.mock(this).e
-  var surveyID = '57c8388cbca4b403007afef7';
-  instance = api(surveyID);
-});
 describe('get()', function() {
+
+  var apiURL = 'http://app.binds.co/api/sendings/';
+  var surveyID = '57c8388cbca4b403007afef7';
+
+  beforeEach(function() {
+    instance = api(surveyID);
+  });
 
   it('should return a promise', function() {
     var survey = instance.get();
@@ -53,16 +40,21 @@ describe('get()', function() {
   });
 
   it('should cache the survey', function() {
-    //var mock = sinon.mock(this);
-    expect(fetch).be.a('function');
-    var survey = instance.get().then(function(e) {
-
-    });
+    sinon.spy(global, 'fetch');
+    instance.get();
+    instance.get();
+    expect(global.fetch.calledTwice).to.be.false;
+    global.fetch.restore();
   });
 
-  it('should set internal survey object', function() {
-    var survey = instance.get();
-    return expect(survey).to.eventually.have.property('_id');
+  it('should clear cache call on force', function() {
+    sinon.spy(global, 'fetch');
+    instance.get();
+    instance.get(true);
+    instance.get();
+    instance.get();
+    expect(global.fetch.calledTwice).to.be.true;
+    global.fetch.restore();
   });
 
 });

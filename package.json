@@ -4,7 +4,7 @@
   "description": "api for easy plug-n-play/embed ",
   "main": "build/index.js",
   "scripts": {
-    "test": "mocha test/indexSpec.js -R nyan",
+    "test": "mocha test/indexSpec.js",
     "test:watch": "npm test -- --watch",
     "build": "webpack ./src/index.js ./build/index.js"
   },

@@ -1,14 +1,13 @@
+/* @flow */
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 var API = function(surveyID) {
-
   var survey;
   var lastSurveyID;
   var apiURL = 'http://app.binds.co/api/sendings/';
 
   return {
-
     get: function(forceRequest) {
       var q = require('q');
       var deferred = q.defer();
