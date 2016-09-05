@@ -1,7 +1,11 @@
-## API 4 Survey
+### Binds Survey
 
-Binds Survey
- [![wercker status](https://app.wercker.com/status/e4335be926ae40b2e060896ef0c33a31/s/master "wercker status")](https://app.wercker.com/project/byKey/e4335be926ae40b2e060896ef0c33a31)
+[![wercker status](https://app.wercker.com/status/e4335be926ae40b2e060896ef0c33a31/s/master "wercker status")](https://app.wercker.com/project/byKey/e4335be926ae40b2e060896ef0c33a31)
+
+
+## Getting Started
+
+
 
 ## Development
 Clone the repo then `npm install` to install dependencies

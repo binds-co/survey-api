@@ -2,7 +2,7 @@ var q = require('q');
 //manual mocking (overriding fetch method to do so)
 var mock = {
   init: function(path, expectedData) {
-    global.fetch = function() {
+    global.fetch = function(path, options) {
       var result = {
         json: function() {
           var deferred = q.defer();

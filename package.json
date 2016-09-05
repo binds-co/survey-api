@@ -5,7 +5,7 @@
   "main": "dist/binds.min.js",
   "scripts": {
     "start": "npm run test:watch",
-    "test": "mocha test/indexSpec.js",
+    "test": "mocha test/*.test.js",
     "test:watch": "npm test -- --watch",
     "build": "webpack ./src/index.js ./dist/binds.min.js"
   },

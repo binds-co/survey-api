@@ -3,25 +3,15 @@ require('isomorphic-fetch');
 
 var q = require('q');
 var sinon = require('sinon');
-var chai = require('chai');
-
-var chaiPromise = require('chai-as-promised');
-chai.use(chaiPromise);
-
-//wrapping chai
-var expect = chai.expect;
-chai.should();
-
+var chai = require('./helpers/chaiWrapper.js');
 var api = require('../src/index.js');
-var instance;
-
 //mocking global.fetch method
 var mock = require('../mocks/index.js');
 
 describe('get()', function() {
-
   var apiURL = 'http://app.binds.co/api/sendings/';
   var surveyID = '57c8388cbca4b403007afef7';
+  var instance;
 
   beforeEach(function() {
     instance = api(surveyID);
@@ -65,5 +55,4 @@ describe('get()', function() {
     expect(global.fetch.calledTwice).to.be.true;
     global.fetch.restore();
   });
-
 });
