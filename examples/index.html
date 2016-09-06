@@ -8,10 +8,11 @@
     <![endif]-->
   </head>
   <body>
-    <script src="../build/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../dist/binds.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-      var surveyId = '57c8388cbca4b403007afef7';
+      var surveyId = '57cf07d3d1fc6603004278e0';
       var a = binds(surveyId);
+      console.log('binds', a.get());
       a.get().then(function(survey){
         console.log('survey', survey);
       });

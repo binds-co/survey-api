@@ -5,24 +5,24 @@ var q = require('q');
 
 var API = function(sendingID) {
   var survey;
-  var lastSurveyID;
-  var apiURL = 'https://app.binds.co/api/';
+  var lastSendingID;
+  var apiURL = 'http://app.binds.co/api/';
   return {
     get: function(forceRequest) {
       var deferred = q.defer();
       //caches survey by default
-      if (sendingID !== lastSurveyID || forceRequest) {
+      if (!sendingID || sendingID !== lastSendingID || forceRequest) {
         fetch(apiURL + 'sendings/' + sendingID + '')
           .then(function(r) {
             return r.json();
           }).then(function(data) {
-          survey = data;
-          deferred.resolve(data);
-        });
+            survey = data;
+            deferred.resolve(data);
+          });
       } else {
         deferred.resolve(survey);
       }
-      lastSurveyID = sendingID;
+      lastSendingID = sendingID;
       return deferred.promise;
     },
     respond: function(questionID, answer) {
@@ -51,7 +51,7 @@ var API = function(sendingID) {
       //add sendingID into response
       _.set(response, 'sending', _.get(survey, '_id'));
 
-      fetch(apiURL + 'surveyResponses', {
+      fetch(apiURL + 'surveyResponses/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

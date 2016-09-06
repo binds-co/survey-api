@@ -1,7 +1,7 @@
 var _ = require('./vendor/lodashWrapper.js');
 
-var types = _.get(require('./question.json'), 'types');
-var uis = _.get(require('./question.json'), 'uis');
+var types = _.get(require('./question.js'), 'types');
+var uis = _.get(require('./question.js'), 'uis');
 
 function validate(type, ui, answer) {
   if (!ui || !type) { return false; }

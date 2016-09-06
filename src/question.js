@@ -1,5 +1,5 @@
-{
-  "types":[
+module.exports = {
+  "types": [
     "kpi",
     "nps",
     "enum",
