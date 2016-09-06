@@ -6,20 +6,23 @@ var sinon = require('sinon');
 var chai = require('./helpers/chaiWrapper.js');
 var api = require('../src/index.js');
 //mocking global.fetch method
-var mock = require('../mocks/index.js');
+//var mock = require('../mocks/index.js');
 
 describe('respond()', function() {
+  //increase timeout
+  this.timeout(5000);
+
   var apiURL = 'http://app.binds.co/api/sendings/';
-  var surveyID = '57c8388cbca4b403007afef7';
+  var sendingID = '57c8388cbca4b403007afef7';
 
   beforeEach(function() {
-    instance = api(surveyID);
-    var expected = require('../mocks/sendings/57c8388cbca4b403007afef7.json');
-    mock.init(apiURL + surveyID, expected);
+    instance = api(sendingID);
+    //var expected = require('../mocks/sendings/57c8388cbca4b403007afef7.json');
+    //mock.init(apiURL + sendingID, expected);
   });
 
   afterEach(function() {
-    mock.restore();
+    //mock.restore();
   });
   var questionID = '5776e1cefca70003001bc5d8';
 
@@ -35,8 +38,9 @@ describe('respond()', function() {
   });
 
   it('should warn if question id is invalid', function() {
-    return instance.get().then(function() {
-      expect(instance.respond.bind(instance, 'randomID' , 1))
+    return instance.get().then(function(e) {
+      console.log('hello', e);
+      return expect(instance.respond.bind(instance, 'randomID', 1))
         .to.throw('Invalid questionID for current survey');
     });
   });
@@ -48,8 +52,8 @@ describe('respond()', function() {
     });
   });
 
-  it('should post to /api/surveyresponses', function() {
-    //expect(false).to.be.true;
-  });
+  //it('should post to /api/surveyresponses', function() {
+  //expect(false).to.be.true;
+  //});
 
 });

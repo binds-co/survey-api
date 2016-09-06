@@ -1,19 +1,18 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-var _ = require('./lodashWrapper.js');
+var _ = require('./vendor/lodashWrapper.js');
+var q = require('q');
 
-var API = function(surveyID) {
+var API = function(sendingID) {
   var survey;
   var lastSurveyID;
   var apiURL = 'https://app.binds.co/api/';
-
   return {
     get: function(forceRequest) {
-      var q = require('q');
       var deferred = q.defer();
       //caches survey by default
-      if (!lastSurveyID || forceRequest) {
-        fetch(apiURL + 'sendings/' + surveyID + '')
+      if (sendingID !== lastSurveyID || forceRequest) {
+        fetch(apiURL + 'sendings/' + sendingID + '')
           .then(function(r) {
             return r.json();
           }).then(function(data) {
@@ -23,12 +22,11 @@ var API = function(surveyID) {
       } else {
         deferred.resolve(survey);
       }
-      lastSurveyID = surveyID;
+      lastSurveyID = sendingID;
       return deferred.promise;
     },
     respond: function(questionID, answer) {
-
-      var q = require('q');
+      var responseBuilder = require('./responseBuilder.js');
       var deferred = q.defer();
 
       if (!questionID || !answer) {
@@ -39,21 +37,35 @@ var API = function(surveyID) {
         throw new Error('Survey not set, get() first');
         return false;
       }
-
-
-      var question = _.find(survey.survey.questions, function(e) {
-        return e._id === questionID;
+      var questions = _.get(survey.survey, 'questions');
+      var question = _.find(questions, {
+        '_id': questionID
       });
       if (!question) {
         throw 'Invalid questionID for current survey';
         return false;
       }
 
+      var response = responseBuilder(question, answer);
+
+      //add sendingID into response
+      _.set(response, 'sending', _.get(survey, '_id'));
+
+      fetch(apiURL + 'surveyResponses', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: 'Hubot',
+            login: 'hubot',
+          })
+      });
+
       setTimeout(function() {
         deferred.resolve(question);
       }, 200);
-
-      var responseBuilder = require('./responseBuilder.js');
 
       return deferred.promise;
     },
