@@ -6,7 +6,7 @@ var sinon = require('sinon');
 var chai = require('./helpers/chaiWrapper.js');
 var api = require('../src/index.js');
 //mocking global.fetch method
-var mock = require('../mocks/index.js');
+var mock = require('../mocks/index.js')();
 
 describe('get()', function() {
   var apiURL = 'http://app.binds.co/api/sendings/';
@@ -16,7 +16,7 @@ describe('get()', function() {
   beforeEach(function() {
     instance = api(surveyID);
     var expected = require('../mocks/sendings/57c8388cbca4b403007afef7.json');
-    mock.init(apiURL + surveyID, expected);
+    mock.get(apiURL + surveyID, expected);
   });
 
   afterEach(function() {

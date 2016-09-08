@@ -6,25 +6,30 @@ var sinon = require('sinon');
 var chai = require('./helpers/chaiWrapper.js');
 var api = require('../src/index.js');
 //mocking global.fetch method
-var mock = require('../mocks/index.js');
+var mock = require('../mocks/index.js')();
 
 describe('respond()', function() {
   //increase timeout
   this.timeout(5000);
 
-  var apiURL = 'http://app.binds.co/api/sendings/';
+  var apiURL = 'http://app.binds.co/api/';
   var sendingID = '57cf07d3d1fc6603004278e0';
   var instance;
 
   beforeEach(function() {
     instance = api(sendingID);
-    var expected = require('../mocks/sendings/57c8388cbca4b403007afef7.json');
-    mock.init(apiURL + sendingID, expected);
+
+    //mocking GET api/sendings/:id
+    var getPath = apiURL + 'sendings/' + sendingID;
+    mock.route('GET', getPath, function() {
+      return require('../mocks/sendings/57c8388cbca4b403007afef7.json');
+    });
   });
 
   afterEach(function() {
     mock.restore();
   });
+
   var questionID = '5776e1cefca70003001bc5d8';
 
   it('should call with params: questionID & answer', function() {
@@ -46,14 +51,32 @@ describe('respond()', function() {
   });
 
   it('should return a promise', function() {
+    //mocking POST result into api/surveyResponses/
+    var path = apiURL + 'surveyResponses/' ;
+    mock.route('POST', path, function() {
+      return require('../mocks/surveyResponses.js');
+    });
+
     return instance.get(true).then(function() {
       var survey = instance.respond(questionID, 100);
       return expect(survey).to.have.property('then');
     });
   });
 
-  //it('should post to /api/surveyresponses', function() {
-  //expect(false).to.be.true;
-  //});
+  it('should post to /api/surveyResponses', function() {
+    //mocking POST result into api/surveyResponses/
+    var path = apiURL + 'surveyResponses/' ;
+    mock.route('POST', path, function() {
+      return require('../mocks/surveyResponses.js');
+    });
+
+    return instance.get(true).then(function() {
+      var answered = instance.respond(questionID, 100);
+      return q.all([
+        expect(answered).to.eventually.have.property('_id'),
+        expect(answered).to.eventually.have.property('question'),
+      ]);
+    });
+  });
 
 });

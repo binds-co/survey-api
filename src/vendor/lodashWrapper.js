@@ -1,6 +1,7 @@
 var _ = {};
 
 _.find = require('./lodash/find.js');
+_.findIndex = require('./lodash/findIndex.js');
 _.get  = require('./lodash/get.js');
 _.set  = require('./lodash/set.js');
 _.isNaN  = require('./lodash/isNaN.js');

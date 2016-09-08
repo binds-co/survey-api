@@ -56,16 +56,14 @@ var API = function(sendingID) {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: 'Hubot',
-            login: 'hubot',
-          })
+        },
+        body: JSON.stringify(response)
+      }).then(function(r) {
+        return r.json();
+      }).then(function(question) {
+        deferred.resolve(question);
       });
 
-      setTimeout(function() {
-        deferred.resolve(question);
-      }, 200);
 
       return deferred.promise;
     },

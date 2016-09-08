@@ -1,4 +1,4 @@
-{
+ module.exports = {
    "_id": "57c9fab8a60be403a8176d70",
    "question": {
       "title": "Pq vc gosta de limão?",
@@ -171,4 +171,4 @@
       "language": "pt-br",
       "isLocked": true
    }
-}
+};
