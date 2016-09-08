@@ -30,20 +30,22 @@ describe('respond()', function() {
     mock.restore();
   });
 
-  var questionID = '5776e1cefca70003001bc5d8';
 
   it('should call with params: questionID & answer', function() {
+    var questionID = '576d3640bd229eb2df765b5a';
     //var survey = instance.respond();
     expect(instance.respond.bind(instance))
       .to.throw('Missing arguments: respond(questionId, answer)');
   });
 
   it('should have survey object filled / get() first', function() {
+    var questionID = '576d3640bd229eb2df765b5a';
     expect(instance.respond.bind(instance, questionID, 'answer'))
       .to.throw('Survey not set, get() first');
   });
 
   it('should warn if question id is invalid', function() {
+    var questionID = '576d3640bd229eb2df765b5a';
     return instance.get(true).then(function(e) {
       return expect(instance.respond.bind(instance, 'randomID', 1))
         .to.throw('Invalid questionID for current survey');
@@ -51,10 +53,12 @@ describe('respond()', function() {
   });
 
   it('should return a promise', function() {
+    var questionID = '576d3640bd229eb2df765b5a';
     //mocking POST result into api/surveyResponses/
     var path = apiURL + 'surveyResponses/' ;
     mock.route('POST', path, function() {
-      return require('../mocks/surveyResponses.js');
+      var q = require('../mocks/surveyResponses.js')(questionID);
+      return q;
     });
 
     return instance.get(true).then(function() {
@@ -64,16 +68,54 @@ describe('respond()', function() {
   });
 
   it('should post to /api/surveyResponses', function() {
+    var questionID = '576d3640bd229eb2df765b5a';
+    //mocking POST result into api/surveyResponses/
+    var path = apiURL + 'surveyResponses/' ;
+    mock.route('POST', path, function() {
+      return require('../mocks/surveyResponses.js')(questionID);
+    });
+
+    return instance.get(true).then(function() {
+      var answered = instance.respond(questionID, 10);
+      return q.all([
+        expect(answered).to.eventually.have.property('_id'),
+        expect(answered).to.eventually.have.property('question'),
+      ]);
+    });
+  });
+
+  it('should resolve the next question (empty then)', function() {
     //mocking POST result into api/surveyResponses/
     var path = apiURL + 'surveyResponses/' ;
     mock.route('POST', path, function() {
       return require('../mocks/surveyResponses.js');
     });
 
-    return instance.get(true).then(function() {
-      var answered = instance.respond(questionID, 100);
+    return instance.get().then(function() {
+      var questionID = '5776e1cefca70003001bc5d8';
+      var answered = instance.respond(questionID, 90);
       return q.all([
-        expect(answered).to.eventually.have.property('_id'),
+        expect(answered)
+          .to.eventually.have.property('id').equal('xlh8lq1980i442t9'),
+        expect(answered).to.eventually.have.property('question'),
+      ]);
+    });
+  });
+
+  it('should resolve the next question (filled then)', function() {
+    //mocking POST result into api/surveyResponses/
+    var path = apiURL + 'surveyResponses/' ;
+    mock.route('POST', path, function() {
+      return require('../mocks/surveyResponses.js');
+    });
+
+    return instance.get().then(function() {
+      var questionID = '565f4ea639832aa5dd7ec5ef';
+      var answered = instance.respond(questionID, 'Beagle');
+
+      return q.all([
+        expect(answered)
+          .to.eventually.have.property('id').equal('wd1qiw1l8mvaemi'),
         expect(answered).to.eventually.have.property('question'),
       ]);
     });

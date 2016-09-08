@@ -27,6 +27,7 @@ var API = function(sendingID) {
     },
     respond: function(questionID, answer) {
       var responseBuilder = require('./responseBuilder.js');
+       var getNextQuestion = require('./getNextQuestion.js');
       var deferred = q.defer();
 
       if (!questionID || !answer) {
@@ -42,7 +43,8 @@ var API = function(sendingID) {
         '_id': questionID
       });
       if (!question) {
-        throw 'Invalid questionID for current survey';
+        throw 'Invalid questionID for current survey: ' +
+          questionID + ' not found in survey';
         return false;
       }
 
@@ -60,8 +62,15 @@ var API = function(sendingID) {
         body: JSON.stringify(response)
       }).then(function(r) {
         return r.json();
-      }).then(function(question) {
-        deferred.resolve(question);
+      }).then(function(response) {
+        //should return in resolve the next question
+       var nextQuestion = getNextQuestion(
+         questions,
+         _.get(survey.survey, 'endMessages'),
+         question,
+         answer
+       );
+        deferred.resolve(nextQuestion);
       });
 
 
