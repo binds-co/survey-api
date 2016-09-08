@@ -27,7 +27,8 @@ var API = function(sendingID) {
     },
     respond: function(questionID, answer) {
       var responseBuilder = require('./responseBuilder.js');
-       var getNextQuestion = require('./getNextQuestion.js');
+      var getNextQuestion = require('./getNextQuestion.js');
+
       var deferred = q.defer();
 
       if (!questionID || !answer) {

@@ -214,8 +214,5 @@ module.exports = function(questionID) {
   var a =_.find(mocks, function(e) {
     return _.get(e, 'question._id') === questionID;
   })
-  return a;
   return _.get(a, 'question');
-
-    //var questionID = '576d3640bd229eb2df765b5a';
 };

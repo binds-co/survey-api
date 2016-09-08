@@ -30,7 +30,6 @@ describe('respond()', function() {
     mock.restore();
   });
 
-
   it('should call with params: questionID & answer', function() {
     var questionID = '576d3640bd229eb2df765b5a';
     //var survey = instance.respond();
@@ -84,13 +83,12 @@ describe('respond()', function() {
     });
   });
 
-  it('should resolve the next question (empty then)', function() {
+  it('should go to next question in array (empty then)', function() {
     //mocking POST result into api/surveyResponses/
     var path = apiURL + 'surveyResponses/' ;
     mock.route('POST', path, function() {
       return require('../mocks/surveyResponses.js');
     });
-
     return instance.get().then(function() {
       var questionID = '5776e1cefca70003001bc5d8';
       var answered = instance.respond(questionID, 90);
@@ -102,7 +100,7 @@ describe('respond()', function() {
     });
   });
 
-  it('should resolve the next question (filled then)', function() {
+  it('should go to corresponding goTo (filled then)', function() {
     //mocking POST result into api/surveyResponses/
     var path = apiURL + 'surveyResponses/' ;
     mock.route('POST', path, function() {
@@ -111,12 +109,15 @@ describe('respond()', function() {
 
     return instance.get().then(function() {
       var questionID = '565f4ea639832aa5dd7ec5ef';
-      var answered = instance.respond(questionID, 'Beagle');
-
+      var beagle = instance.respond(questionID, 'Beagle');
+      var outro = instance.respond(questionID, 'Outro');
       return q.all([
-        expect(answered)
+        expect(beagle)
           .to.eventually.have.property('id').equal('wd1qiw1l8mvaemi'),
-        expect(answered).to.eventually.have.property('question'),
+        expect(beagle).to.eventually.have.property('question'),
+        expect(outro)
+          .to.eventually.have.property('id').equal('t9whdcmtgf58w7b9'),
+        expect(outro).to.eventually.have.property('question'),
       ]);
     });
   });
