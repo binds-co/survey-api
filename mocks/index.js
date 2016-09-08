@@ -33,7 +33,7 @@ var mock = function() {
           var deferred = q.defer();
           setTimeout(function() {
             deferred.resolve(expectedData);
-          }, 100);
+          }, 50);
           return deferred.promise;
         }
       };
@@ -41,7 +41,7 @@ var mock = function() {
       var deferred = q.defer();
       setTimeout(function() {
         deferred.resolve(result);
-      }, 100);
+      }, 50);
       return deferred.promise;
     };
   };
