@@ -9,11 +9,13 @@ var API = function(sendingID) {
     apiURL: 'http://app.binds.co/api/' ,
   };
 
+  //pubsub survey
   var survey;
   pubsub('get:survey').subscribe(function(e) {
     survey = e;
   });
 
+  //pubsub sending
   var lastSendingID;
   pubsub('get:sending').subscribe(function(e) {
     lastSendingID = e;
@@ -22,7 +24,7 @@ var API = function(sendingID) {
 
   var deferred = q.defer();
   getSurveyCache(sendingID).then(function(survey) {
-    var response = {
+    var api = {
       respond: function(questionID, answer) {
         var responseBuilder = require('./responseBuilder.js');
         var getNextQuestion = require('./getNextQuestion.js');
@@ -72,11 +74,10 @@ var API = function(sendingID) {
           deferred.resolve(nextQuestion);
         });
 
-
         return deferred.promise;
       },
     };
-    return deferred.resolve(response);
+    return deferred.resolve(api);
   });
 
   return deferred.promise;

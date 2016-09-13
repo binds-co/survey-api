@@ -1,22 +1,23 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-
 var q = require('q');
 var sinon = require('sinon');
-var chai = require('./helpers/chaiWrapper.js');
-var api = require('../src/index.js');
+
 //mocking global.fetch method
 var mock = require('../mocks/index.js')();
 
-describe('get()', function() {
-  var apiURL = 'http://app.binds.co/api/sendings/';
+describe('getSurvey()', function() {
+  var apiURL = 'http://app.binds.co/api/';
   var surveyID = '57c8388cbca4b403007afef7';
-  var instance;
+  var getSurvey;
+  var config = {
+    apiURL: apiURL
+  };
 
   beforeEach(function() {
-    instance = api(surveyID);
+    getSurvey = require('../src/getSurvey/getSurvey.js')(config);
     var expected = require('../mocks/sendings/57c8388cbca4b403007afef7.json');
-    mock.get(apiURL + surveyID, expected);
+    mock.get(apiURL + 'sendings/' + surveyID, expected);
   });
 
   afterEach(function() {
@@ -24,35 +25,17 @@ describe('get()', function() {
   });
 
   it('should return a promise', function() {
-    var survey = instance.get();
+    var survey = getSurvey(surveyID);
     expect(survey).to.have.property('then');
   });
 
   it('should get the survey', function() {
-    var survey = instance.get();
+    var survey = getSurvey(surveyID);
     return q.all([
       expect(survey).to.eventually.have.property('_id'),
       expect(survey).to.eventually.have.property('survey'),
       expect(survey).to.eventually.have.property('contact'),
       expect(survey).to.eventually.have.property('seed'),
     ]);
-  });
-
-  it('should cache the survey', function() {
-    sinon.spy(global, 'fetch');
-    instance.get();
-    instance.get();
-    expect(global.fetch.calledTwice).to.be.false;
-    global.fetch.restore();
-  });
-
-  it('should clear cache call on force', function() {
-    sinon.spy(global, 'fetch');
-    instance.get();
-    instance.get(true);
-    instance.get();
-    instance.get();
-    expect(global.fetch.calledTwice).to.be.true;
-    global.fetch.restore();
   });
 });
