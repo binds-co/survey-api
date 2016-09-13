@@ -122,4 +122,22 @@ describe('respond()', function() {
     });
   });
 
+  it('should go to the endMessage if', function() {
+    //mocking POST result into api/surveyResponses/
+    var path = apiURL + 'surveyResponses/' ;
+    mock.route('POST', path, function() {
+      return require('../mocks/surveyResponses.js');
+    });
+
+    return instance.get().then(function() {
+      var questionID = '565f4ea639832aa5dd7ec5ef';
+      var answered = instance.respond(questionID, 'Beagle');
+      return q.all([
+        expect(answered)
+          .to.eventually.have.property('id').equal('wd1qiw1l8mvaemi'),
+        expect(answered).to.eventually.have.property('question'),
+      ]);
+    });
+  });
+
 });

@@ -2,28 +2,34 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 var _ = require('./vendor/lodashWrapper.js');
 var q = require('q');
+var pubsub = require('radio');
 
 var API = function(sendingID) {
-  var survey;
-  var lastSendingID;
   var apiURL = 'http://app.binds.co/api/';
+  var getPromise;
+
+  var survey;
+  pubsub('get:survey').subscribe(function(e) {
+    survey = e;
+  });
+
+  var lastSendingID;
+  pubsub('get:sending').subscribe(function(e) {
+    lastSendingID = e;
+  });
+
   return {
     get: function(forceRequest) {
+      var getSurvey = require('./getSurvey/getSurvey.js');
       var deferred = q.defer();
       //caches survey by default
       if (!sendingID || sendingID !== lastSendingID || forceRequest) {
-        fetch(apiURL + 'sendings/' + sendingID + '')
-          .then(function(r) {
-            return r.json();
-          }).then(function(data) {
-            survey = data;
-            deferred.resolve(data);
-          });
+        return getSurvey(sendingID);
       } else {
         deferred.resolve(survey);
       }
       lastSendingID = sendingID;
-      return deferred.promise;
+      return getPromise = deferred.promise;
     },
     respond: function(questionID, answer) {
       var responseBuilder = require('./responseBuilder.js');
@@ -31,6 +37,9 @@ var API = function(sendingID) {
 
       var deferred = q.defer();
 
+      q.when(getPromise, function(e) {
+
+      });
       if (!questionID || !answer) {
         throw new Error('Missing arguments: respond(questionId, answer)');
         return false;
