@@ -11,7 +11,7 @@ pubsub('get:sending').subscribe(function(e) {
   lastSendingID = e;
 });
 
-var getSurveyCache = function(forceRequest, sendingID) {
+var getSurveyCache = function(sendingID, forceRequest) {
   var getSurvey = require('./getSurvey.js');
   var deferred = q.defer();
   //caches survey by default

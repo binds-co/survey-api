@@ -8,17 +8,14 @@ var api = require('../src/index.js');
 //mocking global.fetch method
 var mock = require('../mocks/index.js')();
 
-describe('respond()', function() {
+describe('api.respond()', function() {
   //increase timeout
   this.timeout(5000);
 
   var apiURL = 'http://app.binds.co/api/';
   var sendingID = '57cf07d3d1fc6603004278e0';
-  var instance;
 
   beforeEach(function() {
-    instance = api(sendingID);
-
     //mocking GET api/sendings/:id
     var getPath = apiURL + 'sendings/' + sendingID;
     mock.route('GET', getPath, function() {
@@ -32,20 +29,15 @@ describe('respond()', function() {
 
   it('should call with params: questionID & answer', function() {
     var questionID = '576d3640bd229eb2df765b5a';
-    //var survey = instance.respond();
-    expect(instance.respond.bind(instance))
-      .to.throw('Missing arguments: respond(questionId, answer)');
-  });
-
-  it('should have survey object filled / get() first', function() {
-    var questionID = '576d3640bd229eb2df765b5a';
-    expect(instance.respond.bind(instance, questionID, 'answer'))
-      .to.throw('Survey not set, get() first');
+    return api(sendingID).then(function(instance) {
+      return expect(instance.respond.bind(instance))
+        .to.throw('Missing arguments: respond(questionId, answer)');
+    });
   });
 
   it('should warn if question id is invalid', function() {
     var questionID = '576d3640bd229eb2df765b5a';
-    return instance.get(true).then(function(e) {
+    return api(sendingID).then(function(instance) {
       return expect(instance.respond.bind(instance, 'randomID', 1))
         .to.throw('Invalid questionID for current survey');
     });
@@ -54,13 +46,13 @@ describe('respond()', function() {
   it('should return a promise', function() {
     var questionID = '576d3640bd229eb2df765b5a';
     //mocking POST result into api/surveyResponses/
-    var path = apiURL + 'surveyResponses/' ;
+    var path = apiURL + 'surveyResponses/';
     mock.route('POST', path, function() {
       var q = require('../mocks/surveyResponses.js')(questionID);
       return q;
     });
 
-    return instance.get(true).then(function() {
+    return api(sendingID).then(function(instance) {
       var survey = instance.respond(questionID, 100);
       return expect(survey).to.have.property('then');
     });
@@ -69,12 +61,12 @@ describe('respond()', function() {
   it('should post to /api/surveyResponses', function() {
     var questionID = '576d3640bd229eb2df765b5a';
     //mocking POST result into api/surveyResponses/
-    var path = apiURL + 'surveyResponses/' ;
+    var path = apiURL + 'surveyResponses/';
     mock.route('POST', path, function() {
       return require('../mocks/surveyResponses.js')(questionID);
     });
 
-    return instance.get(true).then(function() {
+    return api(sendingID).then(function(instance) {
       var answered = instance.respond(questionID, 10);
       return q.all([
         expect(answered).to.eventually.have.property('_id'),
@@ -85,11 +77,11 @@ describe('respond()', function() {
 
   it('should go to next question in array (empty then)', function() {
     //mocking POST result into api/surveyResponses/
-    var path = apiURL + 'surveyResponses/' ;
+    var path = apiURL + 'surveyResponses/';
     mock.route('POST', path, function() {
       return require('../mocks/surveyResponses.js');
     });
-    return instance.get().then(function() {
+    return api(sendingID).then(function(instance) {
       var questionID = '5776e1cefca70003001bc5d8';
       var answered = instance.respond(questionID, 90);
       return q.all([
@@ -102,12 +94,12 @@ describe('respond()', function() {
 
   it('should go to corresponding goTo (filled then)', function() {
     //mocking POST result into api/surveyResponses/
-    var path = apiURL + 'surveyResponses/' ;
+    var path = apiURL + 'surveyResponses/';
     mock.route('POST', path, function() {
       return require('../mocks/surveyResponses.js');
     });
 
-    return instance.get().then(function() {
+    return api(sendingID).then(function(instance) {
       var questionID = '565f4ea639832aa5dd7ec5ef';
       var beagle = instance.respond(questionID, 'Beagle');
       var outro = instance.respond(questionID, 'Outro');
@@ -124,12 +116,12 @@ describe('respond()', function() {
 
   it('should go to the endMessage if', function() {
     //mocking POST result into api/surveyResponses/
-    var path = apiURL + 'surveyResponses/' ;
+    var path = apiURL + 'surveyResponses/';
     mock.route('POST', path, function() {
       return require('../mocks/surveyResponses.js');
     });
 
-    return instance.get().then(function() {
+    return api(sendingID).then(function(instance) {
       var questionID = '565f4ea639832aa5dd7ec5ef';
       var answered = instance.respond(questionID, 'Beagle');
       return q.all([
