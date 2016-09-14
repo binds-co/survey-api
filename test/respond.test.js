@@ -2,8 +2,8 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 var q = require('q');
-var sinon = require('sinon');
 var chai = require('./helpers/chaiWrapper.js');
+var sinon = require('sinon');
 var api = require('../src/index.js');
 //mocking global.fetch method
 var mock = require('../mocks/index.js')();
@@ -25,6 +25,14 @@ describe('api.respond()', function() {
 
   afterEach(function() {
     mock.restore();
+  });
+
+  it('should exist in api ;)', function() {
+    var questionID = '576d3640bd229eb2df765b5a';
+    var result = api(sendingID);
+    return q.all([
+      expect(result).to.eventually.have.property('respond')
+    ]);
   });
 
   it('should call with params: questionID & answer', function() {
