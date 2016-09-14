@@ -7,7 +7,10 @@
     "start": "npm run test:watch",
     "test": "mocha test/*.test.js",
     "test:watch": "npm test -- --watch",
-    "build": "webpack ./src/index.js ./dist/binds.min.js"
+    "build": "npm run build-min && npm run build-normal",
+    "build-min": "webpack ./src/index.js ./dist/binds.min.js --minimize",
+    "build-normal": "webpack ./src/index.js ./dist/binds.js"
+
   },
   "repository": {
     "type": "git",
@@ -22,7 +25,8 @@
   "dependencies": {
     "es6-promise": "^3.2.1",
     "isomorphic-fetch": "^2.2.1",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "radio": "^0.2.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

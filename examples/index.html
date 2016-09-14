@@ -8,12 +8,49 @@
     <![endif]-->
   </head>
   <body>
-    <script src="../build/index.js" type="text/javascript" charset="utf-8"></script>
+    <pre>
+      var surveyId = '57cf07d3d1fc6603004278e0';
+      var mysurvey  = binds(surveyId);
+      mysurvey.then(function(survey){
+        console.log('.get() usase: ');
+        console.log('----------------');
+        console.log('get()\n', survey.get())
+        console.log('\n')
+        console.log('get(id)\n', survey.get('q4xyhi9na3mobt9'))
+        console.log('\n')
+        console.log('get("question", id)\n', survey.get('question', 't7dfcnuk3hmq5u1w'))
+        console.log('\n')
+        console.log('get("endMessage", id)\n', survey.get('endMessage', 'q4xyhi9na3mobt9'))
+        console.log('\n')
+        console.log('get("themes", "color")\n', survey.get('theme', 'colors'))
+        console.log('\n')
+        console.log('get("themes", "font")\n', survey.get('theme', 'fonts'))
+        console.log('\n')
+        console.log('get("themes", "image")\n', survey.get('theme', 'images'))
+        console.log('\n')
+      });
+    </pre>
+    <script src="../dist/binds.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-      var surveyId = '57c8388cbca4b403007afef7';
-      var a = binds(surveyId);
-      a.get().then(function(survey){
-        console.log('survey', survey);
+      var surveyId = '57cf07d3d1fc6603004278e0';
+      var mysurvey  = binds(surveyId);
+      mysurvey.then(function(survey){
+        console.log('.get() usase: ');
+        console.log('----------------');
+        console.log('get()\n', survey.get())
+        console.log('\n')
+        console.log('get(id)\n', survey.get('q4xyhi9na3mobt9'))
+        console.log('\n')
+        console.log('get("question", id)\n', survey.get('question', 't7dfcnuk3hmq5u1w'))
+        console.log('\n')
+        console.log('get("endMessage", id)\n', survey.get('endMessage', 'q4xyhi9na3mobt9'))
+        console.log('\n')
+        console.log('get("themes", "color")\n', survey.get('theme', 'colors'))
+        console.log('\n')
+        console.log('get("themes", "font")\n', survey.get('theme', 'fonts'))
+        console.log('\n')
+        console.log('get("themes", "image")\n', survey.get('theme', 'images'))
+        console.log('\n')
       });
     </script>
 

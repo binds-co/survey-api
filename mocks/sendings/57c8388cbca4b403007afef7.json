@@ -67,6 +67,131 @@
       "maxLength": 0,
       "response": {}
     }, {
+      "id": "wpngtk7j8xsr12ol",
+      "title": "Pergunta Randomica",
+      "question": "Random goes here ma boy",
+      "type": "enum",
+      "ui": "10num",
+      "_id": "576d3640bd229eb2df765b5a",
+      "startLabel": "Não indicaria",
+      "endLabel": "Indicaria",
+      "notificate": [],
+      "then": [{
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "0"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "1"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "2"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "3"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "4"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "5"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "6"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "7"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "8"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "9"
+        }
+      }, {
+        "goTo": "wkqyk53sskbv6uyu",
+        "if": {
+          "question": "wpngtk7j8xsr78ol",
+          "operator": "$eq",
+          "value": "10"
+        }
+      }],
+      "randomOptions": true,
+      "options": [{
+        "label": "0",
+        "_id": "57a346ae9ad7260300b40ab9"
+      }, {
+        "label": "1",
+        "_id": "57a346ae9ad7260300b40ab8"
+      }, {
+        "label": "2",
+        "_id": "57a346ae9ad7260300b40ab7"
+      }, {
+        "label": "3",
+        "_id": "57a346ae9ad7260300b40ab6"
+      }, {
+        "label": "4",
+        "_id": "57a346ae9ad7260300b40ab5"
+      }, {
+        "label": "5",
+        "_id": "57a346ae9ad7260300b40ab4"
+      }, {
+        "label": "6",
+        "_id": "57a346ae9ad7260300b40ab3"
+      }, {
+        "label": "7",
+        "_id": "57a346ae9ad7260300b40ab2"
+      }, {
+        "label": "8",
+        "_id": "57a346ae9ad7260300b40ab1"
+      }, {
+        "label": "9",
+        "_id": "57a346ae9ad7260300b40ab0"
+      }, {
+        "label": "10",
+        "_id": "57a346ae9ad7260300b40aaf"
+      }],
+      "maxLength": 0,
+      "response": {}
+    }, {
       "id": "wpngtk7j8xsr78ol",
       "title": "Pergunta Randomica",
       "question": "Random goes here ma boy",

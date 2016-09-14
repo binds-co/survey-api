@@ -1,5 +1,6 @@
  'use strict';
 
+var minimize = process.argv.indexOf('--minimize') !== -1;
 var webpack = require('webpack')
 
 var env = process.env.NODE_ENV
@@ -11,14 +12,14 @@ var config = {
   },
   output: { },
   plugins: [
-    //new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     //new webpack.DefinePlugin({
       //'process.env.NODE_ENV': JSON.stringify(env)
     //})
   ]
 };
 
-//if (env === 'production') {
+if (minimize) {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
@@ -26,9 +27,13 @@ var config = {
         unsafe: true,
         unsafe_comps: true,
         warnings: false
+      },
+      compress: true,
+      output: {
+        comments: false,
       }
     })
   )
-//}
+}
 
 module.exports = config
