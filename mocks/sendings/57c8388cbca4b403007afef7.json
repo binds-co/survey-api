@@ -66,6 +66,19 @@
       "options": [],
       "maxLength": 0,
       "response": {}
+    },{
+      "id": "jojo2",
+      "title": "testing then with goTo without if",
+      "question": "Go To",
+      "type": "text",
+      "ui": "text",
+      "_id": "realjojo2",
+      "notificate": [],
+      "then": [],
+      "randomOptions": false,
+      "options": [],
+      "maxLength": 0,
+      "response": {}
     }, {
       "id": "wpngtk7j8xsr12ol",
       "title": "Pergunta Randomica",
@@ -490,6 +503,19 @@
       "maxLength": 0,
       "response": {}
     }, {
+      "id": "urh7n2zo6l4k7qfr",
+      "title": "Ken oq vc acha?",
+      "question": "Hey !",
+      "type": "text",
+      "ui": "text",
+      "_id": "jojo",
+      "notificate": [],
+      "then": [{"goTo": "jojo2"}],
+      "randomOptions": false,
+      "options": [],
+      "maxLength": 0,
+      "response": {}
+    },{
       "id": "urh7n2zo6l4k7qfr",
       "title": "Sim NAo talvez?",
       "question": "Hey !",

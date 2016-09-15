@@ -22,7 +22,6 @@ var getNextQuestion = function(questions, endMessages, question, answer) {
   id2Go = id2Go ? id2Go : _.find(question.then, function(e) {
     return !_.get(e, 'if');
   });
-
   var wasFoundInQuestions = true;
   var found = _.find(questions, {
     id: id2Go.goTo
@@ -35,7 +34,7 @@ var getNextQuestion = function(questions, endMessages, question, answer) {
     });
   }
 
-  return !found ? endMessages : found;
+  return !found ? endMessages[0] || false : found;
 
 };
 
