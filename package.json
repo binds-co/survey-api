@@ -1,6 +1,6 @@
 {
   "name": "survey-api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "api for easy plug-n-play/embed ",
   "main": "dist/binds.min.js",
   "scripts": {
