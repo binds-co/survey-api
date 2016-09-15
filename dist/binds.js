@@ -85,7 +85,7 @@
 	    var deferred = q.defer();
 
 	    if (!questionID || !answer) {
-	      throw new Error('Missing arguments: respond(questionId, answer)');
+	      throw new Error('Missing arguments: respond(question._id, answer)');
 	      return false;
 	    }
 	    if (!survey) {
@@ -97,7 +97,7 @@
 	      '_id': questionID
 	    });
 	    if (!question) {
-	      throw 'Invalid questionID for current survey: ' +
+	      throw 'Invalid question _id for current survey: ' +
 	      questionID + ' not found in survey';
 	      return false;
 	    }
@@ -5569,7 +5569,6 @@
 	  id2Go = id2Go ? id2Go : _.find(question.then, function(e) {
 	    return !_.get(e, 'if');
 	  });
-
 	  var wasFoundInQuestions = true;
 	  var found = _.find(questions, {
 	    id: id2Go.goTo
@@ -5582,7 +5581,7 @@
 	    });
 	  }
 
-	  return !found ? endMessages : found;
+	  return !found ? endMessages[0] || false : found;
 
 	};
 

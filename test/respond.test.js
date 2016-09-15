@@ -39,15 +39,15 @@ describe('api.respond()', function() {
     var questionID = '576d3640bd229eb2df765b5a';
     return api(sendingID).then(function(instance) {
       return expect(instance.respond.bind(instance))
-        .to.throw('Missing arguments: respond(questionId, answer)');
+        .to.throw('Missing arguments: respond(question._id, answer)');
     });
   });
 
-  it('should warn if question id is invalid', function() {
+  it('should warn if question _id is invalid', function() {
     var questionID = '576d3640bd229eb2df765b5a';
     return api(sendingID).then(function(instance) {
       return expect(instance.respond.bind(instance, 'randomID', 1))
-        .to.throw('Invalid questionID for current survey');
+        .to.throw('Invalid question _id for current survey');
     });
   });
 
@@ -136,6 +136,25 @@ describe('api.respond()', function() {
         expect(answered)
           .to.eventually.have.property('id').equal('wd1qiw1l8mvaemi'),
         expect(answered).to.eventually.have.property('question'),
+      ]);
+    });
+  });
+
+  it('should go to goTo missing the if field', function() {
+      var questionID = 'jojo';
+    //mocking POST result into api/surveyResponses/
+    var path = apiURL + 'surveyResponses/';
+    mock.route('POST', path, function() {
+      return require('../mocks/surveyResponses.js')(questionID);
+    });
+    return api(sendingID).then(function(instance) {
+      var answered = instance.respond(questionID, 'Ken: acho legal');
+      return q.all([
+        expect(answered)
+          .to.eventually.have.property('id').equal('jojo2'),
+        expect(answered).to.eventually.have.property('question'),
+        expect(answered)
+        .to.eventually.have.property('title').equal('testing then with goTo without if'),
       ]);
     });
   });
