@@ -18,6 +18,11 @@ var getNextQuestion = function(questions, endMessages, question, answer) {
   var id2Go = _.find(question.then, function(e) {
     return _.get(e, 'if.value') == answer;
   });
+  //type text does not have if, just the goTo param
+  id2Go = id2Go ? id2Go : _.find(question.then, function(e) {
+    return !_.get(e, 'if');
+  });
+
   var wasFoundInQuestions = true;
   var found = _.find(questions, {
     id: id2Go.goTo
