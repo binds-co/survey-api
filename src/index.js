@@ -39,7 +39,7 @@ var API = function(sendingID) {
     var deferred = q.defer();
 
     if (!questionID || !answer) {
-      throw new Error('Missing arguments: respond(questionId, answer)');
+      throw new Error('Missing arguments: respond(question._id, answer)');
       return false;
     }
     if (!survey) {
@@ -51,7 +51,7 @@ var API = function(sendingID) {
       '_id': questionID
     });
     if (!question) {
-      throw 'Invalid questionID for current survey: ' +
+      throw 'Invalid question _id for current survey: ' +
       questionID + ' not found in survey';
       return false;
     }
