@@ -137,6 +137,10 @@ var API = function(sendingID) {
           id: arguments[0]
         }) || false;
     }
+    if(_.isNumber(arguments[0])) {
+      var a = _.get(survey, 'survey.questions[' + arguments[0] + ']');
+      return a;
+    }
 
     return survey;
   }

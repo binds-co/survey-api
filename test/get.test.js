@@ -8,7 +8,7 @@ var api = require('../src/index.js');
 //mocking global.fetch method
 var mock = require('../mocks/index.js')();
 
-describe('api.get()', function() {
+describe('api()', function() {
   //increase timeout
   this.timeout(5000);
 
@@ -38,6 +38,14 @@ describe('api.get()', function() {
     return api(sendingID).then(function(api) {
       expect(api.get()).to.have.property('_id');
       expect(api.get()).to.have.property('survey');
+    });
+  });
+
+  it('get(index:number):', function() {
+    return api(sendingID).then(function(api) {
+      expect(api.get(2)).property('title').to.equal('Pergunta Randomica');
+      expect(api.get(1)).property('question').equal('Go To');
+      expect(api.get(90)).to.equal(undefined);
     });
   });
 
@@ -106,7 +114,6 @@ describe('api.get()', function() {
 
     });
   });
-
 
   it('get(\'contact\', id)', function() {
     return api(sendingID).then(function(api) {
